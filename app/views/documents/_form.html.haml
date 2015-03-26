@@ -1,0 +1,35 @@
+.row
+  .col-xs-12
+    = form_for(@document) do |f|
+      .row
+        .col-xs-12
+          - if @document.errors.any?
+            #error_explanation
+              %h2
+                = pluralize(@document.errors.count, "error")
+                prohibited this document from being saved:
+              %ul
+                - @document.errors.full_messages.each do |message|
+                  %li= message
+      .row
+        .col-md-5
+          .field
+            = f.label :original
+            %br/
+            = f.text_area :original
+        .col-md-5
+          .field
+            = f.label :tagged
+            %br/
+            = f.text_area :tagged
+        .col-md-2
+          = f.label :is_tagged
+          = f.check_box :is_tagged
+          %br/
+          = select_tag 'tag-selected', options_for_select(Tag.all.collect { |t| [t.name, t.token] })
+          %button#mark-selection{ class: 'btn btn-warning btn-xs' } Mark selection
+          %button#import-tagged{ class: 'btn btn-primary btn-sm' } Import tagged doc
+          %br/
+          = f.submit class: 'btn btn-success btn-sm'
+
+=render 'show'

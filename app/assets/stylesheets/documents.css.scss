@@ -1,0 +1,18 @@
+// Place all the styles related to the Documents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.document {
+  iframe {
+    width: 100%;
+    min-width: 100%;
+    height: 700px;
+  }
+}
+
+form.edit_document {
+  textarea {
+    width: 100%;
+    height: 400px;
+  }
+}

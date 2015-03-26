@@ -1,0 +1,22 @@
+.row
+  .col-xs-12
+    %p
+      %b Date:
+      = invoice[:date]
+
+- invoice[:products].each do |product|
+  .row
+    .col-xs-6{style: 'overflow: scroll'}
+      %p
+        %b Name:
+        = product.name
+    .col-xs-6{style: 'overflow: scroll'}
+      %p
+        %b Price:
+        = product.price
+
+.row
+  .col-xs-12
+    %p.text-right
+      %b Total:
+      = invoice[:total]

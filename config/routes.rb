@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  get 'algorithm/extract'
+
+  resources :tags
+
+  resources :documents do
+    member do
+      get 'extract'
+      get 'original'
+      get 'tagged'
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

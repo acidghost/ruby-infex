@@ -1,0 +1,53 @@
+@import "mixins";
+
+ariel-orders > * {
+  background-color: lightgray;
+}
+
+ariel-order > * {
+  background-color: lightsalmon;
+}
+
+ariel-data {
+  background-color: red;
+  color: #ffffff;
+}
+
+ariel-products, ariel-products > * {
+  background-color: orange;
+}
+
+ariel-product, ariel-product > * {
+  background-color: orchid;
+}
+
+ariel-product_name {
+  background-color: darkblue;
+  color: #ffffff;
+}
+
+ariel-product_price {
+  background-color: orangered;
+  color: #ffffff;
+}
+
+ariel-total {
+  background-color: greenyellow;
+}
+
+table {
+  border: 1px solid #000000;
+  padding: 2px;
+  tr {
+    border: 1px solid green;
+    padding: 2px;
+    margin: 2px;
+    td {
+      border: 1px solid lightseagreen;
+      padding: 2px;
+      margin: 2px;
+    }
+  }
+}
+
+body { @include zoom(0.75) }

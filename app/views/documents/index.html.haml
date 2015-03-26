@@ -1,0 +1,20 @@
+%h1 Listing documents
+.row
+  .col-md-5
+    %b Original
+  .col-md-5
+    %b Tagged
+  .col-md-2
+    %b{:colspan => "3"}
+- @documents.each do |document|
+  .row.document
+    .col-md-5
+      %iframe{ :id => 'original-' + document.id.to_s, :src => original_document_path(document) }
+    .col-md-5
+      %iframe{ :id => 'tagged-' + document.id.to_s, :src => tagged_document_path(document) }
+    .col-md-2
+      = link_to 'Show', document
+      = link_to 'Edit', edit_document_path(document)
+      = link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Document', new_document_path
