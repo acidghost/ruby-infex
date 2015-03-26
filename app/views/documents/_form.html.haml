@@ -1,3 +1,5 @@
+=render 'show'
+
 .row
   .col-xs-12
     = form_for(@document) do |f|
@@ -31,5 +33,3 @@
           %button#import-tagged{ class: 'btn btn-primary btn-sm' } Import tagged doc
           %br/
           = f.submit class: 'btn btn-success btn-sm'
-
-=render 'show'

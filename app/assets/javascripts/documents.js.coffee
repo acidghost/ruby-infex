@@ -31,7 +31,7 @@ jQuery('document').ready ($) ->
         }
       ))
 
-  $('iframe[id^="tagged"]').loadCss('/assets/custom.tags.css')
+  $('iframe[id^="tagged"]').loadCss('/assets/document.tagged.css')
   $('iframe[id^="original"]').loadCss('/assets/document.original.css')
 
 
@@ -87,8 +87,7 @@ jQuery('document').ready ($) ->
         if c == start_element
           to_push = true
         if to_push
-          # saved.push $(c.outerHTML).get(0)
-          saved.push $(c.innerHTML).get(0)
+          saved.push $(c.outerHTML).get(0)
           c.outerHTML = ''
         if c == end_element
           to_push = false
