@@ -29,7 +29,7 @@
           = f.check_box :is_tagged
           %br/
           = select_tag 'tag-selected', options_for_select(Tag.all.collect { |t| [t.name, t.token] })
-          %button#mark-selection{ class: 'btn btn-warning btn-xs' } Mark selection
-          %button#import-tagged{ class: 'btn btn-primary btn-sm' } Import tagged doc
+          %button#mark-selection{ class: 'btn btn-warning btn-xs', type: 'button' } Mark selection
+          %button#import-tagged{ class: 'btn btn-primary btn-sm', type: 'button' } Import tagged doc
           %br/
           = f.submit class: 'btn btn-success btn-sm'

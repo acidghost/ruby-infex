@@ -14,6 +14,7 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
+//= stub document.tagged
 //= require_tree .
 
 jQuery.fn.outerHTML = function() {

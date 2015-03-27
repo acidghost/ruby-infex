@@ -4,18 +4,17 @@
 
 jQuery('document').ready ($) ->
 
-  arielElements = {}
   tags = []
   $('#tag-selected option').each () ->
     tags.push $(this).val()
-  tags.map (tag) ->
-    $iframe = $('iframe[id^="tagged"]')
-    frameDoc = $iframe.get(0).contentDocument
-    document.registerElement tag
-    document.createElement tag
-    elm = frameDoc.registerElement tag
-    frameDoc.createElement tag
-    arielElements[tag] = elm
+
+  arielElements = {}
+  $('iframe[id^="tagged"]').load (e) ->
+    iframe = e.target
+    tags.map (tag) ->
+      frameDoc = iframe.contentDocument
+      elm = frameDoc.createElement(tag).constructor
+      arielElements[tag] = elm
 
   $.fn.loadCss = (css) ->
     iframe = this.eq(0)
@@ -31,14 +30,11 @@ jQuery('document').ready ($) ->
         }
       ))
 
-  $('iframe[id^="tagged"]').loadCss('/assets/document.tagged.css')
   $('iframe[id^="original"]').loadCss('/assets/document.original.css')
-
 
   makeTags = (tag) -> o: '<'+tag+'>', c: '</'+tag+'>'
 
   $('#mark-selection').on 'click', (evt) ->
-    evt.preventDefault()
     $iframe = $('iframe[id^="tagged"]')
     frameDoc = $iframe.get(0).contentDocument
     selection = frameDoc.getSelection()
@@ -70,39 +66,43 @@ jQuery('document').ready ($) ->
       parentInner = [parentInner.slice(0, endIndex), tags.c, parentInner.slice(endIndex)].join ''
       parent.html parentInner
     else
-      childList = $.map(childList, (e) ->
+      childList = $.map childList, (e) ->
         e unless e.nodeName == '#text'
-      )
       start_element = range.startContainer
-      index = 0
       while start_element.parentNode != parent.get(0)
         start_element = start_element.parentNode
-        index++
+      index = $(start_element).index()
       end_element = range.endContainer
       while end_element.parentNode != parent.get(0)
         end_element = end_element.parentNode
       to_push = false
       saved = []
-      $.each childList, (i, c) ->
+      for c in childList
         if c == start_element
           to_push = true
         if to_push
-          saved.push $(c.outerHTML).get(0)
-          c.outerHTML = ''
+          saved.push c
+          $(c).remove()
         if c == end_element
-          to_push = false
-          return
-      $.each saved, (i, e) ->
+          break
+      for e in saved
         customElm.appendChild e
-      parent.children().eq(index).after(customElm)
+
+      parent_children = parent.children()
+      if parent_children.length > 0
+        parent_children.eq(index).before(customElm)
+      else
+        parent.append(customElm)
 
     ['Parent inner after'].logb()
     console.log parentInner
 
   $('#import-tagged').on 'click', (evt) ->
-    evt.preventDefault()
     $iframe = $('iframe[id^="tagged"]')
     frameDoc = $iframe.get(0).contentDocument
-    html = $(frameDoc.children[0]).outerHTML()
+    htmlTag = $(frameDoc.children[0]).clone()
+    htmlTag.find('script').remove()
+    htmlTag.find('link').remove()
+    html = htmlTag.outerHTML()
 
     $('#document_tagged').val html

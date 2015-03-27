@@ -102,7 +102,29 @@ class DocumentsController < ApplicationController
   end
 
   def tagged
-    render text: @document.tagged.to_s
+    doc = Nokogiri::HTML(@document.tagged)
+    head = doc.xpath '//head'
+
+    style = Nokogiri::XML::Node.new 'link', doc
+    style['rel'] = 'stylesheet'
+    style['type'] = 'text/css'
+    style['href'] = '/assets/document.tagged.css'
+    head.children.first.add_previous_sibling style
+
+    script = Nokogiri::XML::Node.new 'script', doc
+    script['type'] = 'text/javascript'
+    script['src'] = '/assets/document.tagged.js'
+    head.children.first.add_previous_sibling script
+
+    html = doc.to_html
+    html = html.split /\n/
+    html = html[2..html.size-1]
+    html.unshift '<html>'
+    html.unshift '<!DOCTYPE html>'
+
+    html = html.join "\n"
+
+    render text: html
   end
 
   private

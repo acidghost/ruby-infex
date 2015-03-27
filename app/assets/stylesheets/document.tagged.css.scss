@@ -1,37 +1,45 @@
 @import "mixins";
 
-ariel-orders > * {
+ariel-orders > *,
+[data-ariel="ariel-orders"] > * {
   background-color: lightgray;
 }
 
-ariel-order > * {
+ariel-order > *,
+[data-ariel="ariel-order"] > * {
   background-color: lightsalmon;
 }
 
-ariel-data {
+ariel-data,
+[data-ariel="ariel-data"] {
   background-color: red;
   color: #ffffff;
 }
 
-ariel-products, ariel-products > * {
+ariel-products, ariel-products > *,
+[data-ariel="ariel-products"] > * {
   background-color: orange;
 }
 
-ariel-product, ariel-product > * {
+ariel-product, ariel-product > *,
+[data-ariel="ariel-product"] > * {
   background-color: orchid;
 }
 
-ariel-product_name {
+ariel-product_name,
+[data-ariel="ariel-product_name"] > * {
   background-color: darkblue;
   color: #ffffff;
 }
 
-ariel-product_price {
+ariel-product_price,
+[data-ariel="ariel-price"] > * {
   background-color: orangered;
   color: #ffffff;
 }
 
-ariel-total {
+ariel-total,
+[data-ariel="ariel-total"] > * {
   background-color: greenyellow;
 }
 
