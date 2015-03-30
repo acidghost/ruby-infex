@@ -32,20 +32,21 @@ jQuery('document').ready ($) ->
 
   $('iframe[id^="original"]').loadCss('/assets/document.original.css')
 
-  makeTags = (tag) -> o: '<'+tag+'>', c: '</'+tag+'>'
-
   $('#mark-selection').on 'click', (evt) ->
     $iframe = $('iframe[id^="tagged"]')
     frameDoc = $iframe.get(0).contentDocument
     selection = frameDoc.getSelection()
     tag = $('#tag-selected').val()
-    tags = makeTags tag
+    tags =
+      o: '<span data-' + tag + '="true" data-' + tag + '-condition="open">'
+      c: '</span>'
     customElm = new arielElements[tag]()
 
     strSelection = $('<div />').append(getHTMLOfSelection(frameDoc)).html()
     ['Selected string', strSelection].logb()
 
     range = selection.getRangeAt(0)
+    parent = ancestor_is_text = undefined
     if range.commonAncestorContainer.nodeName == '#text'
       parent = $(range.commonAncestorContainer.parentNode)
       ancestor_is_text = true
@@ -53,49 +54,33 @@ jQuery('document').ready ($) ->
       parent = $(range.commonAncestorContainer)
       ancestor_is_text = false
 
-    childList = parent.get(0).childNodes
-
-    parentInner = parent.html()
-    ['Parent inner before'].logb()
-    console.log parentInner
-
     if ancestor_is_text
+      parentInner = parent.html()
       startIndex = parentInner.indexOf(strSelection)
       parentInner = [parentInner.slice(0, startIndex), tags.o, parentInner.slice(startIndex)].join ''
       endIndex = startIndex + tags.o.length + strSelection.length
       parentInner = [parentInner.slice(0, endIndex), tags.c, parentInner.slice(endIndex)].join ''
       parent.html parentInner
     else
-      childList = $.map childList, (e) ->
+      parent = parent.get(0)
+      childList = $.map parent.childNodes, (e) ->
         e unless e.nodeName == '#text'
       start_element = range.startContainer
-      while start_element.parentNode != parent.get(0)
+      while start_element.parentNode != parent
         start_element = start_element.parentNode
-      index = $(start_element).index()
       end_element = range.endContainer
-      while end_element.parentNode != parent.get(0)
+      while end_element.parentNode != parent
         end_element = end_element.parentNode
       to_push = false
-      saved = []
       for c in childList
         if c == start_element
           to_push = true
+          $(c).attr('data-'+tag+'-condition', 'open')
         if to_push
-          saved.push c
-          $(c).remove()
+          $(c).attr('data-'+tag, true)
         if c == end_element
+          $(c).attr('data-'+tag+'-condition', 'close')
           break
-      for e in saved
-        customElm.appendChild e
-
-      parent_children = parent.children()
-      if parent_children.length > 0
-        parent_children.eq(index).before(customElm)
-      else
-        parent.append(customElm)
-
-    ['Parent inner after'].logb()
-    console.log parentInner
 
   $('#import-tagged').on 'click', (evt) ->
     $iframe = $('iframe[id^="tagged"]')

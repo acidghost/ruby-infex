@@ -14,8 +14,9 @@
 ActiveRecord::Schema.define(version: 20150323105908) do
 
   create_table "documents", force: true do |t|
-    t.text     "original"
+    t.text     "original",                   null: false
     t.text     "tagged"
+    t.text     "tagged_xml"
     t.boolean  "is_tagged",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"

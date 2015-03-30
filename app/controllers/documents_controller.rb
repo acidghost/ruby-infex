@@ -1,8 +1,7 @@
 class DocumentsController < ApplicationController
-  require __dir__ + '/../../lib/ariel_structures'
   include ArielStructures
 
-  before_action :set_document, only: [:show, :edit, :update, :destroy, :extract, :original, :tagged]
+  before_action :set_document, only: [:show, :edit, :update, :destroy, :extract, :original, :tagged, :tagged_xml]
 
   class Product < Struct.new :name, :price
 
@@ -18,6 +17,11 @@ class DocumentsController < ApplicationController
       self[:products].push product
     end
 
+  end
+
+  def initialize
+    super
+    @structure = invoice_structure
   end
 
   # GET /documents
@@ -125,6 +129,10 @@ class DocumentsController < ApplicationController
     html = html.join "\n"
 
     render text: html
+  end
+
+  def tagged_xml
+    render text: @document.tagged_xml
   end
 
   private

@@ -1,45 +1,53 @@
 @import "mixins";
 
 ariel-orders > *,
-[data-ariel="ariel-orders"] > * {
+*[data-ariel="ariel-orders"] > *,
+*[data-ariel-orders="true"] > * {
   background-color: lightgray;
 }
 
 ariel-order > *,
-[data-ariel="ariel-order"] > * {
+*[data-ariel="ariel-order"] > *,
+*[data-ariel-order="true"] > * {
   background-color: lightsalmon;
 }
 
-ariel-data,
-[data-ariel="ariel-data"] {
+ariel-date,
+*[data-ariel="ariel-date"],
+*[data-ariel-date="true"] {
   background-color: red;
   color: #ffffff;
 }
 
 ariel-products, ariel-products > *,
-[data-ariel="ariel-products"] > * {
+*[data-ariel="ariel-products"] > *,
+*[data-ariel-products="true"] > * {
   background-color: orange;
 }
 
 ariel-product, ariel-product > *,
-[data-ariel="ariel-product"] > * {
+*[data-ariel="ariel-product"] > *,
+*[data-ariel-product="true"] > * {
   background-color: orchid;
 }
 
 ariel-product_name,
-[data-ariel="ariel-product_name"] > * {
+*[data-ariel="ariel-product_name"],
+*[data-ariel-product_name="true"] {
   background-color: darkblue;
   color: #ffffff;
 }
 
 ariel-product_price,
-[data-ariel="ariel-price"] > * {
+*[data-ariel="ariel-product_price"],
+*[data-ariel-product_price="true"] {
   background-color: orangered;
   color: #ffffff;
 }
 
 ariel-total,
-[data-ariel="ariel-total"] > * {
+*[data-ariel="ariel-total"],
+*[data-ariel-total="true"] {
   background-color: greenyellow;
 }
 
@@ -59,4 +67,4 @@ table {
   }
 }
 
-body { @include zoom(0.75) }
+body { @include zoom(0.6) }

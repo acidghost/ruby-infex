@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'extract'
       get 'original'
       get 'tagged'
+      get 'tagged_xml'
     end
   end
 
