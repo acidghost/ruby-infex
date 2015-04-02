@@ -55,6 +55,16 @@ class Document < ActiveRecord::Base
     self.tagged
   end
 
+  def plain
+    d = Nokogiri::HTML(self.original)
+    d.xpath('//style').remove
+    d.xpath('//script').remove
+    d = d.xpath('//text()').to_s
+    d = d.split /\n/
+    d = d.map { |p| p.strip }
+    d.join "\n"
+  end
+
   def setup_tagged
     html = Nokogiri::HTML self.original
     html.xpath('//@href').remove
@@ -62,24 +72,5 @@ class Document < ActiveRecord::Base
     html.xpath('//style').remove
     self.tagged = html.to_html
   end
-
-  private
-    def bf_traverse_tree(structure)
-      queue = [structure]
-      visited = { structure.node_name => true }
-      level = 0
-      yield structure, level
-      until queue.empty?
-        node = queue.pop
-        level = level+1
-        node.children.each do |node_name, child|
-          unless visited[node_name]
-            yield child, level
-            queue.push child
-            visited[node_name] = true
-          end
-        end
-      end
-    end
 
 end

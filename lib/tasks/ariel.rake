@@ -13,7 +13,6 @@ namespace :ariel do
     # end
     # documents = Dir['/home/andrea/workarea/ariel/examples/google_calculator/labeled/*']
 
-    # documents = documents[1,2]
     Ariel.learn structure, *documents
 
     File.open(Rails.root.to_s + '/db/learnt_rules.yaml', 'wb') do |file|

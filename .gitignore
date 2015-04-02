@@ -16,5 +16,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/lib/treat/tmp
+/lib/treat/bin
+/lib/treat/models
 
 .idea

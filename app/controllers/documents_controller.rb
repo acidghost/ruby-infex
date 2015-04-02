@@ -1,7 +1,9 @@
 class DocumentsController < ApplicationController
   include ArielStructures
 
-  before_action :set_document, only: [:show, :edit, :update, :destroy, :extract, :original, :tagged, :tagged_xml]
+  respond_to :html, :json, :text
+
+  before_action :set_document, only: [:show, :edit, :update, :destroy, :extract, :original, :tagged, :tagged_xml, :plain]
 
   class Product < Struct.new :name, :price
 
@@ -133,6 +135,12 @@ class DocumentsController < ApplicationController
 
   def tagged_xml
     render text: @document.tagged_xml
+  end
+
+  def plain
+    respond_with do |format|
+      format.text { render text: @document.plain.to_s }
+    end
   end
 
   private

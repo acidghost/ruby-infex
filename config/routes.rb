@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'original'
       get 'tagged'
       get 'tagged_xml'
+      get 'plain', defaults: { format: 'text' }
     end
   end
 

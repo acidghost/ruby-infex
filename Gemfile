@@ -39,9 +39,18 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-# gem 'ariel', github: 'acidghost/ariel'
-gem 'ariel', path: '~/workarea'
-
 gem 'haml-rails'
 
 gem 'nokogiri'
+
+# gem 'ariel', github: 'acidghost/ariel'
+gem 'ariel', path: '~/workarea'
+
+gem 'treat'
+gem 'whatlanguage'
+gem 'stanford-core-nlp'
+gem 'stopwords-filter'
+gem 'ruby-stemmer'
+gem 'tf_idf'
+gem 'k_means'
+gem 'lda-ruby'
